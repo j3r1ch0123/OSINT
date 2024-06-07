@@ -3,6 +3,7 @@
 import requests
 import re
 import time
+import threading
 import urllib.parse
 from bs4 import BeautifulSoup
 
@@ -122,4 +123,12 @@ def main():
 
 # call main function
 if __name__ == "__main__":
-    main()
+    # use threads to scrape multiple URLs in parallel
+    threads = []
+    for i in range(20):
+        thread = threading.Thread(target=main)
+        thread.start()
+        threads.append(thread)
+    for thread in threads:
+        thread.join()
+
